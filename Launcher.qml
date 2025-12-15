@@ -22,7 +22,7 @@ FloatingWindow {
         color: "#1e1e1e"
         radius: 8
         border.width: 1
-        border.color: "#2a2a2a"
+        border.color: "#24272A"
 
         ColumnLayout {
             anchors.fill: parent
@@ -33,9 +33,9 @@ FloatingWindow {
             Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 40
-                color: "#2a2a2a"
-                border.width: 2
-                border.color: "#4a90e2"
+                color: "#24272A"
+                border.width: 1
+                border.color: "#41d8d5"
                 radius: 4
 
                 TextInput {
@@ -65,13 +65,13 @@ FloatingWindow {
 
                     Keys.onReturnPressed: event => {
                         LauncherModel.launchSelected();
-                        launcher.visible = false;
                         event.accepted = true;
+                        Qt.quit();
                     }
 
                     Keys.onEscapePressed: event => {
-                        launcher.visible = false;
                         event.accepted = true;
+                        Qt.quit();
                     }
                 }
             }
@@ -90,7 +90,7 @@ FloatingWindow {
                     isSelected: index === LauncherModel.selectedIndex
 
                     onClicked: {
-                        launcher.visible = false;
+                        Qt.quit();
                     }
                 }
             }
