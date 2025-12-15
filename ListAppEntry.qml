@@ -17,7 +17,7 @@ Rectangle {
     color: {
         if (isSelected)
             return "#3e3e3e";
-        if (mouseArea.containsMouse)
+        if (mouse_area.containsMouse)
             return "#353535";
         return "#2a2a2a";
     }
@@ -31,22 +31,18 @@ Rectangle {
         spacing: 10
 
         Image {
+            id: app_icon
             Layout.alignment: Qt.AlignLeft
-            Layout.fillWidth: true
-            Layout.fillHeight: true
             Layout.preferredWidth: 32
             Layout.preferredHeight: 32
-
             source: Quickshell.iconPath(root.entry.icon, "application-x-generic")
-            sourceSize.width: 32
-            sourceSize.height: 32
         }
 
         Column {
+            id: app_info
             Layout.alignment: Qt.AlignLeft
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.preferredWidth: (1 / 2) * (parent.width - 32)
             spacing: 3
 
             Text {
@@ -62,38 +58,18 @@ Rectangle {
             }
         }
 
-        Column {
-            Layout.alignment: Qt.AlignCenter
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.preferredWidth: (parent.width - 32) / 4
-            spacing: 1
-
-            Repeater {
-                model: root.entry.actions.map(a => a.name)
-                delegate: Text {
-                    required property var modelData
-                    text: modelData
-                    color: "#888888"
-                    font.pixelSize: 10
-                }
-            }
-        }
-
         Text {
-            Layout.alignment: Qt.AlignRight
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.preferredWidth: (parent.width - 32) / 4
+            id: app_command_string
+            Layout.alignment: Qt.AlignVCenter
             text: root.entry.execString
             color: "#888888"
+            font.italic: true
             font.pixelSize: 12
-            wrapMode: Text.WrapAnywhere
         }
     }
 
     MouseArea {
-        id: mouseArea
+        id: mouse_area
         anchors.fill: parent
         hoverEnabled: true
 

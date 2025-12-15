@@ -84,7 +84,7 @@ FloatingWindow {
                 spacing: 2
                 clip: true
 
-                delegate: AppEntry {
+                delegate: ListAppEntry {
                     width: ListView.view.width
                     entry: modelData
                     isSelected: index === LauncherModel.selectedIndex

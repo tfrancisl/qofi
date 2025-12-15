@@ -1,3 +1,5 @@
+//Singleton for access QS builtin DesktopEntries
+
 pragma Singleton
 
 import Quickshell
@@ -56,9 +58,10 @@ Singleton {
         if (!query) {
             filteredApps = allApps;
         } else {
-            filteredApps = allApps.filter(entry => entry.name.toLowerCase().includes(lowerQuery) || (entry.genericName && entry.genericName.toLowerCase().includes(lowerQuery)) ||
-                // (entry.comment && entry.comment.toLowerCase().includes(lowerQuery))
-                (entry.keywords && entry.keywords.some(k => k.toLowerCase().includes(lowerQuery))));
+            filteredApps = allApps.filter(entry => entry.name.toLowerCase().includes(lowerQuery) || (entry.genericName && entry.genericName.toLowerCase().includes(lowerQuery))
+            // || (entry.comment && entry.comment.toLowerCase().includes(lowerQuery))
+            // || (entry.keywords && entry.keywords.some(k => k.toLowerCase().includes(lowerQuery)))
+            );
         }
 
         // Reset selection to first item after filtering

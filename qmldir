@@ -1,3 +1,5 @@
 singleton LauncherModel 1.0 LauncherModel.qml
-Launcher 1.0 Launcher.qml
-AppEntry 1.0 AppEntry.qml
+ListLauncher 1.0 ListLauncher.qml
+ListAppEntry 1.0 ListAppEntry.qml
+GridLauncher 1.0 GridLauncher.qml
+GridAppEntry 1.0 GridAppEntry.qml
