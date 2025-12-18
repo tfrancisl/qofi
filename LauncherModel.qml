@@ -63,26 +63,5 @@ Singleton {
             // || (entry.keywords && entry.keywords.some(k => k.toLowerCase().includes(lowerQuery)))
             );
         }
-
-        // Reset selection to first item after filtering
-        selectedIndex = 0;
-    }
-
-    function selectNext() {
-        if (selectedIndex < filteredApps.length - 1) {
-            selectedIndex++;
-        }
-    }
-
-    function selectPrevious() {
-        if (selectedIndex > 0) {
-            selectedIndex--;
-        }
-    }
-
-    function launchSelected() {
-        if (selectedIndex >= 0 && selectedIndex < filteredApps.length) {
-            filteredApps[selectedIndex].execute();
-        }
     }
 }

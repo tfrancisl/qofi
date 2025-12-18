@@ -1,60 +1,58 @@
+pragma ComponentBehavior: Bound
 import QtQuick
-import QtQuick.Layouts
 
-Rectangle {
+Item {
     id: launcher
     anchors.fill: parent
-    color: "#1e1e1e"
-    radius: 8
-    border.width: 1
-    border.color: "#24272A"
+    anchors.margins: 10
 
-    ColumnLayout {
-        anchors.fill: parent
-        anchors.margins: 10
-        spacing: 10
+    Rectangle {
+        id: searchBackground
+        width: parent.width
+        height: 35
+        color: "#242424"
+        border.width: 2
+        border.color: "#20AAD5"
+        radius: 5
 
-        // Search input
-        Rectangle {
-            Layout.fillWidth: true
-            Layout.preferredHeight: 40
-            color: "#24272A"
-            border.width: 1
-            border.color: "#41d8d5"
-            radius: 4
+        anchors.top: parent.top
 
-            TextInput {
-                id: searchInput
-                anchors.fill: parent
-                anchors.margins: 10
+        TextInput {
+            id: searchInput
+            anchors.fill: parent
+            anchors.margins: 10
 
-                text: ""
-                font.pixelSize: 16
-                color: "#ffffff"
-                selectByMouse: true
-                focus: true
+            font.pixelSize: 16
+            color: "#ffffff"
+            selectByMouse: true
+            focus: true
 
-                onTextEdited: {
-                    LauncherModel.updateSearch(text);
-                }
+            onTextEdited: {
+                LauncherModel.updateSearch(text);
             }
         }
+    }
 
-        ListView {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            model: LauncherModel.filteredApps
-            spacing: 2
-            clip: true
+    ListView {
+        id: appList
+        model: LauncherModel.filteredApps
 
-            delegate: ListAppEntry {
-                width: ListView.view.width
-                entry: modelData
-                isSelected: index === LauncherModel.selectedIndex
+        width: parent.width
+        anchors.top: searchBackground.bottom
+        anchors.bottom: parent.bottom
+        anchors.margins: {
+            top: 10;
+        }
+        spacing: 5
+        clip: true
 
-                onClicked: {
-                    Qt.quit();
-                }
+        delegate: ListAppEntry {
+            width: appList.width
+            height: 48
+            entry: modelData
+
+            onClicked: {
+                Qt.quit();
             }
         }
     }

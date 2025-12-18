@@ -3,3 +3,4 @@ ListLauncher 1.0 ListLauncher.qml
 ListAppEntry 1.0 ListAppEntry.qml
 GridLauncher 1.0 GridLauncher.qml
 GridAppEntry 1.0 GridAppEntry.qml
+ActionOrAppEntry 1.0 ActionOrAppEntry.qml

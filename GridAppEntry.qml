@@ -1,5 +1,4 @@
 import Quickshell
-import QtQuick.Layouts
 import QtQuick
 import QtQuick.Controls
 
@@ -19,8 +18,8 @@ Rectangle {
 
     color: isSelected ? "#353535" : "#2a2a2a"
 
-    border.width: isSelected ? 3 : 2
-    border.color: isSelected ? "#41d8d5" : "#111111"
+    border.width: isSelected ? 2 : 0
+    border.color: "#41d8d5"
     radius: 4
 
     Image {
@@ -40,7 +39,7 @@ Rectangle {
             LauncherModel.selectedIndex = root.index;
         }
 
-        onClicked: {
+        onClicked: mouse => {
             // should expand into a focused view of that app
             // root.entry.execute();
             // Signal to parent to hide launcher

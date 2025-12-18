@@ -1,30 +1,8 @@
-import Quickshell
 import QtQuick
-import QtQuick.Layouts
 
-Rectangle {
+Item {
     id: launcher
     anchors.fill: parent
-    color: "#1e1e1e"
-    radius: 8
-    border.width: 1
-    border.color: "#24272A"
-
-    Rectangle {
-        Layout.preferredWidth: 0
-        Layout.preferredHeight: 0
-        color: "transparent"
-        border.color: "transparent"
-
-        TextInput {
-            id: searchInput
-            anchors.fill: parent
-            anchors.margins: 10
-
-            color: "transparent"
-            focus: true
-        }
-    }
 
     GridView {
         anchors.fill: parent

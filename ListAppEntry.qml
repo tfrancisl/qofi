@@ -1,86 +1,83 @@
-import Quickshell
-import QtQuick.Layouts
-import QtQuick
+pragma ComponentBehavior: Bound
 
-Rectangle {
+import QtQuick
+import QtQuick.Controls
+
+Item {
     id: root
 
     required property var entry
     required property int index
     required property var modelData
-    property bool isSelected: false
+
+    property int actionPopupMargin: 12
 
     signal clicked
 
-    width: parent.width
-    height: 48
-    color: {
-        if (isSelected)
-            return "#3e3e3e";
-        if (mouse_area.containsMouse)
-            return "#353535";
-        return "#2a2a2a";
-    }
-    border.width: isSelected ? 1 : 0
-    border.color: "#41d8d5"
-    radius: 4
-
-    RowLayout {
+    ComboBox {
+        id: appActionsSelector
+        property var desktopEntry: root.entry
         anchors.fill: parent
-        anchors.margins: 10
-        spacing: 10
+        model: ["app", ...root.entry.actions]
 
-        Image {
-            id: app_icon
-            Layout.alignment: Qt.AlignLeft
-            Layout.preferredWidth: 32
-            Layout.preferredHeight: 32
-            source: Quickshell.iconPath(root.entry.icon, "application-x-generic")
+        // Component shown before clicking anything
+        contentItem: ActionOrAppEntry {
+            desktopEntry: appActionsSelector.desktopEntry
+            visible: !appActionsSelector.popup.visible
         }
 
-        Column {
-            id: app_info
-            Layout.alignment: Qt.AlignLeft
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            spacing: 3
+        delegate: ItemDelegate {
+            id: delegate
 
-            Text {
-                text: root.entry.name
-                color: "#ffffff"
-                font.pixelSize: 14
+            required property var model
+            required property int index
+            width: parent.width - 2 * root.actionPopupMargin
+            height: 48
+
+            contentItem: ActionOrAppEntry {
+                desktopEntry: appActionsSelector.desktopEntry
+                // messy, but we know the app itself is in index 0
+                desktopActionEntry: delegate.index === 0 ? null : delegate.model.modelData
+            }
+            background: Item {}
+        }
+
+        popup: Popup {
+            height: contentItem.implicitHeight
+            width: parent.width - 2 * root.actionPopupMargin
+            x: 2 * root.actionPopupMargin
+
+            contentItem: ListView {
+                clip: true
+                anchors {
+                    fill: parent
+                    margins: 4.5
+                }
+                // Fix these magic numbers pls :)
+                implicitHeight: Math.min(contentHeight + 10, 48 * 4)
+                model: appActionsSelector.popup.visible ? appActionsSelector.delegateModel : null
+                currentIndex: appActionsSelector.highlightedIndex
+                spacing: 5
             }
 
-            Text {
-                text: root.entry.genericName || root.entry.comment || ""
-                color: "#888888"
-                font.pixelSize: 12
+            background: Rectangle {
+                width: parent.width - 2 * root.actionPopupMargin
+                color: "black"
+                border.width: 2
+                border.color: "#20AAD5"
+                radius: 5
             }
         }
 
-        Text {
-            id: app_command_string
-            Layout.alignment: Qt.AlignVCenter
-            text: root.entry.execString
-            color: "#888888"
-            font.italic: true
-            font.pixelSize: 12
-        }
-    }
+        background: Item {}
+        indicator: Canvas {}
 
-    MouseArea {
-        id: mouse_area
-        anchors.fill: parent
-        hoverEnabled: true
-
-        onEntered: {
-            LauncherModel.selectedIndex = root.index;
-        }
-
-        onClicked: {
-            root.entry.execute();
-            // Signal to parent to hide launcher
-            root.clicked();
+        onActivated: index => {
+            if (index === 0) {
+                root.entry.execute();
+                return;
+            }
+            model[index].execute();
         }
     }
 }
