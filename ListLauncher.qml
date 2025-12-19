@@ -25,17 +25,18 @@ Item {
             font.pixelSize: 16
             color: "#ffffff"
             selectByMouse: true
-            focus: true
 
-            onTextEdited: {
-                LauncherModel.updateSearch(text);
+            Keys.onEscapePressed: event => {
+                text = "";
+                focus = false;
             }
         }
     }
 
     ListView {
         id: appList
-        model: LauncherModel.filteredApps
+
+        model: LauncherModel.queryEntries(searchInput.text)
 
         width: parent.width
         anchors.top: searchBackground.bottom
@@ -49,7 +50,7 @@ Item {
         delegate: ListAppEntry {
             width: appList.width
             height: 48
-            entry: modelData
+            desktopEntry: modelData
 
             onClicked: {
                 Qt.quit();

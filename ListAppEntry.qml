@@ -6,24 +6,24 @@ import QtQuick.Controls
 Item {
     id: root
 
-    required property var entry
+    required property var desktopEntry
     required property int index
     required property var modelData
 
-    property int actionPopupMargin: 12
+    property int entryHeight: 48
+    property int maxUnclippedPopupEntries: 4
+    property int popupMargin: 12
 
     signal clicked
 
     ComboBox {
-        id: appActionsSelector
-        property var desktopEntry: root.entry
+        id: selector
         anchors.fill: parent
-        model: ["app", ...root.entry.actions]
+        model: ["app", ...root.desktopEntry.actions]
 
-        // Component shown before clicking anything
-        contentItem: ActionOrAppEntry {
-            desktopEntry: appActionsSelector.desktopEntry
-            visible: !appActionsSelector.popup.visible
+        contentItem: ListAppEntryContent {
+            desktopEntry: root.desktopEntry
+            visible: !selector.popup.visible
         }
 
         delegate: ItemDelegate {
@@ -31,11 +31,11 @@ Item {
 
             required property var model
             required property int index
-            width: parent.width - 2 * root.actionPopupMargin
-            height: 48
+            width: parent.width - 2 * root.popupMargin
+            height: root.entryHeight
 
-            contentItem: ActionOrAppEntry {
-                desktopEntry: appActionsSelector.desktopEntry
+            contentItem: ListPopupEntry {
+                desktopEntry: root.desktopEntry
                 // messy, but we know the app itself is in index 0
                 desktopActionEntry: delegate.index === 0 ? null : delegate.model.modelData
             }
@@ -44,24 +44,24 @@ Item {
 
         popup: Popup {
             height: contentItem.implicitHeight
-            width: parent.width - 2 * root.actionPopupMargin
-            x: 2 * root.actionPopupMargin
+            width: parent.width - 2 * root.popupMargin
+            x: 2 * root.popupMargin
 
             contentItem: ListView {
+                id: entryList
                 clip: true
                 anchors {
                     fill: parent
-                    margins: 4.5
+                    margins: 5
                 }
-                // Fix these magic numbers pls :)
-                implicitHeight: Math.min(contentHeight + 10, 48 * 4)
-                model: appActionsSelector.popup.visible ? appActionsSelector.delegateModel : null
-                currentIndex: appActionsSelector.highlightedIndex
+                implicitHeight: Math.min(contentHeight + entryList.anchors.margins * 2, root.entryHeight * root.maxUnclippedPopupEntries)
+                model: selector.popup.visible ? selector.delegateModel : null
+                currentIndex: selector.highlightedIndex
                 spacing: 5
             }
 
             background: Rectangle {
-                width: parent.width - 2 * root.actionPopupMargin
+                width: parent.width - 2 * root.popupMargin
                 color: "black"
                 border.width: 2
                 border.color: "#20AAD5"
@@ -74,7 +74,7 @@ Item {
 
         onActivated: index => {
             if (index === 0) {
-                root.entry.execute();
+                root.desktopEntry.execute();
                 return;
             }
             model[index].execute();

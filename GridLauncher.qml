@@ -7,7 +7,7 @@ Item {
     GridView {
         anchors.fill: parent
         anchors.margins: 8
-        model: LauncherModel.filteredApps
+        model: LauncherModel.allApps
         clip: true
         cellWidth: launcher.width / 16
         cellHeight: launcher.width / 16
@@ -15,7 +15,6 @@ Item {
         delegate: GridAppEntry {
             entry: modelData
             size: (parent.width / 16) - 6
-            isSelected: index === LauncherModel.selectedIndex
 
             onClicked: {
                 // Qt.quit();
