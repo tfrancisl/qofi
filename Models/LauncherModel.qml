@@ -1,5 +1,3 @@
-//Singleton for access QS builtin DesktopEntries
-
 pragma Singleton
 
 import Quickshell

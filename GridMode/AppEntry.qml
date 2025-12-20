@@ -35,10 +35,6 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: true
 
-        onEntered: {
-            LauncherModel.selectedIndex = root.index;
-        }
-
         onClicked: mouse => {
             // should expand into a focused view of that app
             // root.entry.execute();

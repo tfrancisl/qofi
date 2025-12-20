@@ -1,5 +1,7 @@
 import QtQuick
 
+import "../Models"
+
 Item {
     id: launcher
     anchors.fill: parent
@@ -12,7 +14,7 @@ Item {
         cellWidth: launcher.width / 16
         cellHeight: launcher.width / 16
 
-        delegate: GridAppEntry {
+        delegate: AppEntry {
             entry: modelData
             size: (parent.width / 16) - 6
 

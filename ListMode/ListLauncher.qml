@@ -1,10 +1,14 @@
 pragma ComponentBehavior: Bound
 import QtQuick
 
+import "../Models"
+
 Item {
-    id: launcher
+    id: root
     anchors.fill: parent
     anchors.margins: 10
+
+    property int listEntryHeight: 48
 
     Rectangle {
         id: searchBackground
@@ -47,9 +51,10 @@ Item {
         spacing: 5
         clip: true
 
-        delegate: ListAppEntry {
+        delegate: AppEntry {
             width: appList.width
-            height: 48
+            height: root.listEntryHeight
+            entryHeight: root.listEntryHeight
             desktopEntry: modelData
 
             onClicked: {

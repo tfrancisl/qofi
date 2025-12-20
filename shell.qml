@@ -1,6 +1,8 @@
 import Quickshell
 import QtQuick
 import QtQuick.Layouts
+import "GridMode/"
+import "ListMode/"
 
 PanelWindow {
     id: root
@@ -9,18 +11,11 @@ PanelWindow {
     property var launcher: launchers[1]
     property int currentLauncherIndex: 1
     focusable: true
+    implicitHeight: screen.height
+    implicitWidth: screen.width * 0.2
 
     anchors {
-        top: true
-        bottom: true
-        left: true
         right: true
-    }
-    margins {
-        top: screen.height * (1 / 4)
-        bottom: screen.height * (1 / 4)
-        left: screen.width * (1 / 3)
-        right: screen.width * (1 / 3)
     }
 
     function cycleLauncher() {
@@ -30,8 +25,12 @@ PanelWindow {
 
     Rectangle {
         anchors.fill: parent
+        anchors.margins: 10
         focus: true
         color: "black"
+        border.color: "#454545"
+        border.width: 3
+        radius: 5
         Shortcut {
             context: Qt.WindowShortcut
             sequence: "Shift+D"

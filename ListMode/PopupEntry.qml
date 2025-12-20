@@ -2,29 +2,21 @@ import Quickshell
 import QtQuick.Layouts
 import QtQuick
 
-Rectangle {
+Item {
     id: root
     required property var desktopEntry
     required property var desktopActionEntry
-
-    property bool isHovered: mouseArea.containsMouse
-    border.width: root.isHovered ? 2 : 0
-    border.color: root.isHovered ? "#41D8D5" : "transparent"
-    color: root.isHovered ? "#555555" : "#3A3A3A"
-    anchors.fill: parent
-    radius: 5
 
     RowLayout {
         property int actionIndex
         anchors.fill: parent
         anchors.margins: 4
-        spacing: 10
 
         Image {
             Layout.alignment: Qt.AlignLeft
             Layout.preferredWidth: 32
             Layout.preferredHeight: 32
-            source: Quickshell.iconPath(root.desktopEntry.icon, "application-x-generic")
+            source: Quickshell.iconPath(root.desktopEntry.icon)
         }
 
         Text {
@@ -42,11 +34,5 @@ Rectangle {
             font.italic: true
             font.pixelSize: 12
         }
-    }
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        hoverEnabled: true
-        acceptedButtons: Qt.NoButton
     }
 }
