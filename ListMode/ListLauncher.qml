@@ -51,7 +51,7 @@ Item {
         spacing: 5
         clip: true
 
-        delegate: AppEntry {
+        delegate: ListEntry {
             width: appList.width
             height: root.listEntryHeight
             entryHeight: root.listEntryHeight
