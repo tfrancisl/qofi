@@ -9,7 +9,7 @@ Item {
     GridView {
         anchors.fill: parent
         anchors.margins: 8
-        model: LauncherModel.allApps
+        model: LauncherModel.apps
         clip: true
         cellWidth: launcher.width / 16
         cellHeight: launcher.width / 16
