@@ -18,6 +18,7 @@ Item {
     signal clicked
 
     RowLayout {
+        id: outerLayout
         anchors.fill: parent
 
         Rectangle {
@@ -27,7 +28,7 @@ Item {
             color: isHovered ? "#333333" : "#222222"
             radius: 5
             Layout.alignment: Qt.AlignLeft
-            Layout.fillWidth: true
+            Layout.preferredWidth: actions.entryHasActions ? (parent.width * 0.6 - outerLayout.spacing) : parent.width
             Layout.fillHeight: true
 
             MouseArea {
@@ -82,7 +83,7 @@ Item {
             property bool isHovered: actionMouseArea.containsMouse
             property bool entryHasActions: root.desktopEntry.actions.length !== 0
             Layout.alignment: Qt.AlignRight
-            Layout.preferredWidth: entryHasActions ? 256 : 0
+            Layout.preferredWidth: entryHasActions ? parent.width * 0.4 : 0
             Layout.fillHeight: true
 
             MouseArea {
@@ -117,6 +118,26 @@ Item {
                             anchors.centerIn: parent
                             color: "#AAAAAA"
                             text: "Actions for " + root.desktopEntry.name
+                        }
+
+                        Rectangle {
+                            anchors {
+                                left: parent.left
+                                bottom: parent.bottom
+                                top: parent.top
+                                margins: 12
+                            }
+                            width: 30
+                            height: parent.height
+                            color: "#41D8D5"
+                            radius: 12
+                            Text {
+                                anchors.centerIn: parent
+                                color: "black"
+                                text: selector.model.length < 10 ? selector.model.length.toString() : "9+"
+                                font.pixelSize: 15
+                                font.weight: Font.Bold
+                            }
                         }
                     }
 
