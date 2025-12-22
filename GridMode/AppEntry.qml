@@ -9,47 +9,41 @@ Rectangle {
     required property int index
     required property var modelData
     required property int size
-    property bool isSelected: false
 
-    signal clicked
+    property bool isHovered: mouseArea.containsMouse
 
     width: size
     height: size
 
-    color: isSelected ? "#353535" : "#2a2a2a"
+    border.width: isHovered ? 2 : 1
+    border.color: isHovered ? "#41D8D5" : "transparent"
+    color: isHovered ? "#333333" : "#222222"
+    radius: 5
 
-    border.width: isSelected ? 2 : 0
-    border.color: "#41d8d5"
-    radius: 4
-
-    Image {
-        id: app_icon
-        anchors.centerIn: parent
-        width: root.size * (3 / 4)
-        height: root.size * (3 / 4)
-        source: Quickshell.iconPath(root.entry.icon, "application-x-generic")
-    }
+    signal clicked
 
     MouseArea {
-        id: mouse_area
+        id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
 
+        Image {
+            anchors.centerIn: parent
+            width: root.size * (3 / 4)
+            height: root.size * (3 / 4)
+            source: Quickshell.iconPath(root.entry.icon)
+        }
+
         onClicked: mouse => {
-            // should expand into a focused view of that app
-            // root.entry.execute();
-            // Signal to parent to hide launcher
+            root.entry.execute();
             root.clicked();
         }
 
         ToolTip {
-            id: app_tooltip
-            visible: root.isSelected || mouse_area.containsMouse
-            text: root.entry.name
+            visible: mouseArea.containsMouse
 
             contentItem: Text {
-                text: app_tooltip.text
-                font: app_tooltip.font
+                text: root.entry.name
                 color: "#888888"
             }
 

@@ -1,9 +1,13 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 
 import "../Models"
 
 Item {
-    id: launcher
+    id: root
+
+    required property real shellScale
+
     anchors.fill: parent
 
     GridView {
@@ -11,15 +15,15 @@ Item {
         anchors.margins: 8
         model: LauncherModel.apps
         clip: true
-        cellWidth: launcher.width / 16
-        cellHeight: launcher.width / 16
+        cellWidth: 64 * root.shellScale
+        cellHeight: 64 * root.shellScale
 
         delegate: AppEntry {
             entry: modelData
-            size: (parent.width / 16) - 6
+            size: 58 * root.shellScale
 
             onClicked: {
-                // Qt.quit();
+                Qt.quit();
             }
         }
     }

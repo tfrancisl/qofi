@@ -5,15 +5,17 @@ import "../Models"
 
 Item {
     id: root
+
     anchors.fill: parent
     anchors.margins: 10
 
+    property real shellScale: 1.0
     property int listEntryHeight: 48
 
     Rectangle {
         id: searchBackground
         width: parent.width
-        height: 35
+        height: 35 * root.shellScale
         color: "#242424"
         border.width: 2
         border.color: "#20AAD5"
@@ -53,8 +55,9 @@ Item {
 
         delegate: ListEntry {
             width: appList.width
-            height: root.listEntryHeight
-            entryHeight: root.listEntryHeight
+            shellScale: root.shellScale
+            height: root.listEntryHeight * root.shellScale
+            entryHeight: root.listEntryHeight * root.shellScale
             desktopEntry: modelData
 
             onClicked: {

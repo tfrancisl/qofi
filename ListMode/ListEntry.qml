@@ -12,21 +12,22 @@ Item {
 
     property int entryHeight: 48
     property int maxUnclippedPopupEntries: 4
+    property real shellScale: 1.0
 
     signal clicked
 
     RowLayout {
         id: outerLayout
         anchors.fill: parent
+        height: root.entryHeight * root.shellScale
 
         AppButton {
             id: appButton
 
             desktopEntry: root.desktopEntry
-            preferredWidth: actions.entryHasActions ? (parent.width * 0.6 - outerLayout.spacing) : parent.width
 
             Layout.alignment: Qt.AlignLeft
-            Layout.preferredWidth: preferredWidth
+            Layout.preferredWidth: actions.entryHasActions ? (parent.width * 0.6 - outerLayout.spacing) : parent.width
             Layout.fillHeight: true
 
             onClicked: root.clicked()
@@ -36,7 +37,7 @@ Item {
             id: actions
 
             desktopEntry: root.desktopEntry
-            entryHeight: root.entryHeight
+            entryHeight: root.entryHeight * root.shellScale
             maxUnclippedPopupEntries: root.maxUnclippedPopupEntries
 
             Layout.alignment: Qt.AlignRight
