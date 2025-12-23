@@ -18,11 +18,21 @@ PanelWindow {
 
     property real shellScale: 1.0
 
-    implicitHeight: screen.height
-    implicitWidth: screen.width * 0.2
+    implicitWidth: screen.width * (1 / 2)
+    implicitHeight: screen.height * (2 / 5)
 
     anchors {
         right: true
+        left: true
+        top: true
+        bottom: true
+    }
+
+    margins {
+        left: implicitWidth / 2
+        right: implicitWidth / 2
+        top: implicitHeight / 2
+        bottom: implicitHeight / 2
     }
 
     function cycleLauncher() {
@@ -46,8 +56,8 @@ PanelWindow {
         anchors.fill: parent
         anchors.margins: 10
 
-        color: "black"
-        border.color: "#454545"
+        color: "#CC000000"
+        border.color: "#CC454545"
         border.width: 3
         radius: 5
 
@@ -146,6 +156,20 @@ PanelWindow {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
                 sourceComponent: root.launcher
+
+                Text {
+                    anchors {
+                        bottom: parent.bottom
+                        right: parent.right
+                        margins: 5.5
+                    }
+                    text: "freya :: qofi"
+                    font {
+                        pixelSize: 10
+                        italic: true
+                    }
+                    color: "#1F1F1F"
+                }
             }
         }
     }
