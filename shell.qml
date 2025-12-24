@@ -16,24 +16,11 @@ PanelWindow {
     property int currentLauncherIndex: 0
     focusable: true
 
-    property real shellScale: 1.0
+    property double shellScale: (2 / 3)
+    property double shellAspectRatio: 16 / 9
 
-    implicitWidth: screen.width * (1 / 2)
-    implicitHeight: screen.height * (2 / 5)
-
-    anchors {
-        right: true
-        left: true
-        top: true
-        bottom: true
-    }
-
-    margins {
-        left: implicitWidth / 2
-        right: implicitWidth / 2
-        top: implicitHeight / 2
-        bottom: implicitHeight / 2
-    }
+    implicitWidth: Math.round(screen.height * shellAspectRatio * shellScale)
+    implicitHeight: Math.round(screen.height * shellScale)
 
     function cycleLauncher() {
         currentLauncherIndex = (currentLauncherIndex + 1) % launchers.length;
@@ -92,63 +79,18 @@ PanelWindow {
         ColumnLayout {
             anchors.fill: parent
 
-            Rectangle {
-                id: topPanel
-                implicitHeight: 50
-                Layout.fillWidth: true
-                color: "black"
-                border.color: "#454545"
-                border.width: 3
-                radius: 5
-
-                RowLayout {
-                    anchors.fill: parent
-                    anchors.margins: 5
-
-                    Text {
-                        text: "Shift+=\nIncrease Scale"
-                        color: "#999999"
-                    }
-
-                    Text {
-                        text: "Shift+-\nDecrease Scale"
-                        color: "#999999"
-                    }
-
-                    Text {
-                        text: "Current Scale: " + root.shellScale.toFixed(2)
-                        color: "#FFFFFF"
-                    }
-
-                    Text {
-                        text: "Shift+R\nReset"
-                        color: "#999999"
-                    }
-
-                    Text {
-                        text: "Shift+D\nToggle Mode"
-                        color: "#999999"
-                    }
-
-                    Text {
-                        text: "ESC\nQuit"
-                        color: "#999999"
-                    }
-                }
+            InfoPanel {
+                shellScale: root.shellScale
             }
 
             Component {
                 id: grid
-                GridLauncher {
-                    shellScale: root.shellScale
-                }
+                GridLauncher {}
             }
 
             Component {
                 id: list
-                ListLauncher {
-                    shellScale: root.shellScale
-                }
+                ListLauncher {}
             }
 
             Loader {

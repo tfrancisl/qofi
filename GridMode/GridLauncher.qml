@@ -3,28 +3,28 @@ import QtQuick
 
 import "../Models"
 
-Item {
+GridView {
     id: root
 
-    required property real shellScale
+    property int itemsPerRow: 16
+    property var scaledCellHeight: ((parent.width - 2 * anchors.margins) / root.itemsPerRow)
+    property int appEntrySize: (root.scaledCellHeight - 2)
 
     anchors.fill: parent
+    anchors.margins: Math.min(24, 8)
 
-    GridView {
-        anchors.fill: parent
-        anchors.margins: 8
-        model: LauncherModel.apps
-        clip: true
-        cellWidth: 64 * root.shellScale
-        cellHeight: 64 * root.shellScale
+    model: LauncherModel.apps
 
-        delegate: AppEntry {
-            entry: modelData
-            size: 58 * root.shellScale
+    clip: true
+    cellWidth: scaledCellHeight
+    cellHeight: scaledCellHeight
 
-            onClicked: {
-                Qt.quit();
-            }
+    delegate: AppEntry {
+        entry: modelData
+        size: root.appEntrySize
+
+        onClicked: {
+            Qt.quit();
         }
     }
 }
