@@ -1,27 +1,39 @@
 pragma ComponentBehavior: Bound
 import QtQuick
+import QtQuick.Layouts
 
 import "../Models"
 
-// Rewrite to toggle between expanded entry and grid mode using signals
-GridView {
+GridLayout {
     id: root
+    anchors {
+        top: parent.top
+        left: parent.left
+        right: parent.right
+        margins: 8
+    }
 
-    property int itemsPerRow: 16
-    property var scaledCellSize: ((parent.width - 2 * anchors.margins) / root.itemsPerRow)
-    property int appEntrySize: (root.scaledCellSize - 2)
+    columns: 10
 
-    anchors.fill: parent
-    anchors.margins: Math.min(24, 8)
+    rowSpacing: 8
+    columnSpacing: 8
 
-    model: LauncherModel.apps
+    Repeater {
+        model: LauncherModel.apps
 
-    clip: true
-    cellWidth: scaledCellSize
-    cellHeight: scaledCellSize
+        delegate: LaunchEntry {
+            Layout.preferredHeight: entryExpanded ? 300 : 100
+            Layout.preferredWidth: entryExpanded ? 300 : 100
+            Layout.columnSpan: entryExpanded ? 3 : 1
+            Layout.rowSpan: entryExpanded ? 3 : 1
 
-    delegate: AppEntry {
-        entry: modelData
-        size: root.appEntrySize
+            property bool entryExpanded: false
+
+            entry: modelData
+
+            onRightClicked: {
+                entryExpanded = !entryExpanded;
+            }
+        }
     }
 }
