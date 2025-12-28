@@ -4,6 +4,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+import "../Components"
+
 Item {
     id: root
     required property var modelData
@@ -76,6 +78,7 @@ Item {
     Component {
         id: expandedEntry
         Rectangle {
+            id: expandedEntryBody
             anchors.fill: parent
 
             border.width: 4
@@ -87,6 +90,7 @@ Item {
                 anchors.fill: parent
                 ColumnLayout {
                     Layout.leftMargin: parent.width * (1 / 16)
+                    Layout.rightMargin: parent.width * (1 / 16)
 
                     Image {
                         id: icon
@@ -105,39 +109,58 @@ Item {
 
                 ColumnLayout {
                     Layout.fillWidth: true
-                    Rectangle {
-                        Layout.fillWidth: true
-                        Layout.topMargin: 25
-                        Layout.bottomMargin: 25
+
+                    Component {
+                        id: launchCommand
                         RowLayout {
-                            anchors.fill: parent
                             Text {
-                                Layout.alignment: Qt.AlignLeft
                                 text: "App Launch Command"
                                 color: "#BBBBBB"
                             }
                             Text {
                                 wrapMode: Text.WrapAnywhere
                                 text: root.entry.execString
+                                font.italic: true
                                 color: "#888888"
                             }
                         }
                     }
-                    Rectangle {
-                        Layout.fillWidth: true
-                        Layout.topMargin: 25
-                        Layout.bottomMargin: 25
-                        RowLayout {
-                            anchors.fill: parent
-                            Text {
-                                Layout.alignment: Qt.AlignLeft
-                                text: "App Launch Command"
-                                color: "#BBBBBB"
-                            }
-                            Text {
-                                wrapMode: Text.WrapAnywhere
-                                text: root.entry.execString
-                                color: "#888888"
+                    Component {
+                        id: appActions
+                        ActionsComboBox {
+                            id: actions
+
+                            desktopEntry: root.entry
+                            entryHeight: 25
+                            maxUnclippedPopupEntries: 2
+
+                            Layout.alignment: Qt.AlignRight
+                            Layout.preferredWidth: entryHasActions ? parent.width * 0.4 : 0
+                            Layout.fillHeight: true
+
+                            // onClicked: root.clicked()
+                        }
+                    }
+
+                    Repeater {
+                        model: [launchCommand, appActions]
+
+                        delegate: Rectangle {
+                            id: delegate
+                            required property var modelData
+                            Layout.minimumWidth: expandedEntryBody.width * 0.6
+                            Layout.minimumHeight: expandedEntryBody.height * 0.1
+                            Layout.maximumHeight: expandedEntryBody.height * 0.3
+
+                            border.width: 1
+                            border.color: "#41D8D5"
+                            color: "#333333"
+                            radius: 5
+
+                            Loader {
+                                anchors.fill: parent
+                                anchors.margins: 3
+                                sourceComponent: delegate.modelData
                             }
                         }
                     }

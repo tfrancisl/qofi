@@ -37,8 +37,8 @@ Item {
 
             contentItem: Rectangle {
                 anchors.fill: parent
-                border.width: root.isHovered ? 2 : 1
-                border.color: root.isHovered ? "#41D8D5" : "transparent"
+                border.width: root.isHovered ? 2 : 0
+                border.color: "#41D8D5"
                 color: root.isHovered ? "#333333" : "#222222"
                 radius: 5
 
@@ -53,7 +53,6 @@ Item {
                         left: parent.left
                         bottom: parent.bottom
                         top: parent.top
-                        margins: 12
                     }
                     width: 30
                     height: parent.height
@@ -82,7 +81,7 @@ Item {
                 contentItem: Rectangle {
                     property bool isHovered: popupMouseArea.containsMouse
                     border.width: isHovered ? 2 : 0
-                    border.color: isHovered ? "#41D8D5" : "transparent"
+                    border.color: "#41D8D5"
                     color: isHovered ? "#555555" : "#3A3A3A"
                     anchors.fill: parent
                     radius: 5
@@ -142,9 +141,6 @@ Item {
                 background: Rectangle {
                     width: parent.width
                     color: "black"
-                    border.width: 2
-                    border.color: "#20AAD5"
-                    radius: 5
                 }
             }
 

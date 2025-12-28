@@ -21,12 +21,13 @@ GridLayout {
         model: LauncherModel.apps
 
         delegate: LaunchEntry {
+            entry: modelData
+
             Layout.alignment: Qt.AlignTop
             Layout.preferredHeight: entryExpanded ? root.expandedEntryHeight : root.entryHeight
             Layout.preferredWidth: entryExpanded ? root.expandedEntryWidth : root.entryWidth
             Layout.rowSpan: entryExpanded ? (root.expandedEntryHeight / root.entryHeight) : 1
             Layout.columnSpan: entryExpanded ? (root.expandedEntryWidth / root.entryWidth) : 1
-            entry: modelData
             onActivated: Qt.quit()
         }
     }
