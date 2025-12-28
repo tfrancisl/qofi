@@ -12,8 +12,8 @@ FloatingWindow {
     color: "transparent"
 
     property list<var> launchers: [grid, list]
-    property var launcher: launchers[0]
     property int currentLauncherIndex: 0
+    property var launcher: launchers[currentLauncherIndex]
 
     property double shellScale: (2 / 3)
     property double shellAspectRatio: 16 / 9
@@ -23,64 +23,60 @@ FloatingWindow {
 
     function cycleLauncher() {
         currentLauncherIndex = (currentLauncherIndex + 1) % launchers.length;
-        launcher = launchers[currentLauncherIndex];
+    }
+
+    Shortcut {
+        context: Qt.WindowShortcut
+        sequence: "Shift+D"
+        onActivated: root.cycleLauncher()
+    }
+
+    Shortcut {
+        context: Qt.WindowShortcut
+        sequence: "Esc"
+        onActivated: Qt.quit()
     }
 
     Rectangle {
         anchors.fill: parent
-        anchors.margins: 10
 
         color: "#CC000000"
-        border.color: "#CC454545"
-        border.width: 3
         radius: 5
 
         focus: true
 
-        Keys.onEscapePressed: event => {
-            event.accepted = true;
-            Qt.quit();
+        Component {
+            id: grid
+            GridLauncher {}
         }
 
-        Shortcut {
-            context: Qt.WindowShortcut
-            sequence: "Shift+D"
-            onActivated: root.cycleLauncher()
+        Component {
+            id: list
+            ListLauncher {}
         }
 
-        ColumnLayout {
-            anchors.fill: parent
-
-            Component {
-                id: grid
-                GridLauncher {}
+        Loader {
+            id: launcherLoader
+            anchors {
+                top: parent.top
+                horizontalCenter: parent.horizontalCenter
+                margins: 12
             }
+            sourceComponent: root.launcher
+        }
 
-            Component {
-                id: list
-                ListLauncher {}
+        Text {
+            anchors {
+                bottom: parent.bottom
+                right: parent.right
+                margins: 5.5
             }
-
-            Loader {
-                id: launcherLoader
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-                sourceComponent: root.launcher
-
-                Text {
-                    anchors {
-                        bottom: parent.bottom
-                        right: parent.right
-                        margins: 5.5
-                    }
-                    text: "freya :: qofi"
-                    font {
-                        pixelSize: 10
-                        italic: true
-                    }
-                    color: "#1F1F1F"
-                }
+            text: "freya :: qofi"
+            font {
+                pixelSize: 10
+                italic: true
             }
+            color: "#1F1F1F"
         }
     }
 }

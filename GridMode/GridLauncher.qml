@@ -6,34 +6,28 @@ import "../Models"
 
 GridLayout {
     id: root
-    anchors {
-        top: parent.top
-        left: parent.left
-        right: parent.right
-        margins: 8
-    }
-
     columns: 10
 
-    rowSpacing: 8
-    columnSpacing: 8
+    property double entryHeight: 100
+    property double entryWidth: 100
+    property double entryAspectRatio: (entryWidth / entryHeight)
+    property double expandedEntryHeight: 300
+    property double expandedEntryWidth: 500
+
+    rowSpacing: 16
+    columnSpacing: 4
 
     Repeater {
         model: LauncherModel.apps
 
         delegate: LaunchEntry {
-            Layout.preferredHeight: entryExpanded ? 300 : 100
-            Layout.preferredWidth: entryExpanded ? 300 : 100
-            Layout.columnSpan: entryExpanded ? 3 : 1
-            Layout.rowSpan: entryExpanded ? 3 : 1
-
-            property bool entryExpanded: false
-
+            Layout.alignment: Qt.AlignTop
+            Layout.preferredHeight: entryExpanded ? root.expandedEntryHeight : root.entryHeight
+            Layout.preferredWidth: entryExpanded ? root.expandedEntryWidth : root.entryWidth
+            Layout.rowSpan: entryExpanded ? (root.expandedEntryHeight / root.entryHeight) : 1
+            Layout.columnSpan: entryExpanded ? (root.expandedEntryWidth / root.entryWidth) : 1
             entry: modelData
-
-            onRightClicked: {
-                entryExpanded = !entryExpanded;
-            }
+            onActivated: Qt.quit()
         }
     }
 }
