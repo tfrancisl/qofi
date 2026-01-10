@@ -11,17 +11,12 @@ Item {
     required property var modelData
     required property var entry
 
-    property bool entryExpanded: {
-        if (entry.name === "Alacritty")
-            return true;
-        false;
-    }
+    property bool entryExpanded: false
     property var preferredIconSize: (2 / 3) * width
 
     signal activated
-    onActivated: entry.execute()
-
     signal expanded
+
     onExpanded: entryExpanded = !entryExpanded
 
     Component {
@@ -66,6 +61,7 @@ Item {
 
                 onClicked: mouse => {
                     if (mouse.button === Qt.LeftButton) {
+                        root.entry.execute();
                         root.activated();
                     } else if (mouse.button === Qt.RightButton) {
                         root.expanded();
@@ -131,14 +127,14 @@ Item {
                             id: actions
 
                             desktopEntry: root.entry
-                            entryHeight: 25
+                            height: 25
                             maxUnclippedPopupEntries: 2
 
                             Layout.alignment: Qt.AlignRight
                             Layout.preferredWidth: entryHasActions ? parent.width * 0.4 : 0
                             Layout.fillHeight: true
 
-                            // onClicked: root.clicked()
+                            onClicked: root.activated()
                         }
                     }
 

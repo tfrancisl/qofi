@@ -12,7 +12,6 @@ Item {
     required property int index
     required property var modelData
 
-    property int entryHeight: 48
     property int maxUnclippedPopupEntries: 4
     property real shellScale: 1.0
 
@@ -21,7 +20,7 @@ Item {
     RowLayout {
         id: outerLayout
         anchors.fill: parent
-        height: root.entryHeight * root.shellScale
+        height: root.height * root.shellScale
 
         AppButton {
             id: appButton
@@ -39,7 +38,7 @@ Item {
             id: actions
 
             desktopEntry: root.desktopEntry
-            entryHeight: root.entryHeight * root.shellScale
+            height: root.height * root.shellScale
             maxUnclippedPopupEntries: root.maxUnclippedPopupEntries
 
             Layout.alignment: Qt.AlignRight

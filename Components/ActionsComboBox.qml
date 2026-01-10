@@ -7,7 +7,6 @@ import QtQuick.Layouts
 Item {
     id: root
     required property var desktopEntry
-    required property var entryHeight
     required property var maxUnclippedPopupEntries
     property bool isHovered: actionMouseArea.containsMouse
     property bool entryHasActions: desktopEntry.actions.length !== 0
@@ -76,7 +75,7 @@ Item {
                 property var desktopActionEntry: model.modelData
 
                 width: parent.width
-                height: root.entryHeight
+                height: root.height
 
                 contentItem: Rectangle {
                     property bool isHovered: popupMouseArea.containsMouse
@@ -133,8 +132,8 @@ Item {
                     spacing: 5
                     clip: true
 
-                    property int tooFewEntriesHeight: (count * root.entryHeight) + (count * spacing) + (anchors.margins)
-                    property int tooManyEntriesHeight: (root.entryHeight * root.maxUnclippedPopupEntries) + (count * spacing)
+                    property int tooFewEntriesHeight: (count * root.height) + (count * spacing) + (anchors.margins)
+                    property int tooManyEntriesHeight: (root.height * root.maxUnclippedPopupEntries) + (count * spacing)
                     implicitHeight: Math.min(tooFewEntriesHeight, tooManyEntriesHeight)
                 }
 

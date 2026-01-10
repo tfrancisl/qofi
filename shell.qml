@@ -2,7 +2,6 @@ pragma ComponentBehavior: Bound
 
 import Quickshell
 import QtQuick
-import QtQuick.Layouts
 
 import "GridMode/"
 import "ListMode/"
@@ -11,7 +10,7 @@ FloatingWindow {
     id: root
     color: "transparent"
 
-    property list<var> launchers: [grid, list]
+    property list<var> launchers: [list, grid]
     property int currentLauncherIndex: 0
     property var launcher: launchers[currentLauncherIndex]
 
@@ -58,8 +57,7 @@ FloatingWindow {
         Loader {
             id: launcherLoader
             anchors {
-                top: parent.top
-                horizontalCenter: parent.horizontalCenter
+                fill: parent
                 margins: 12
             }
             sourceComponent: root.launcher
