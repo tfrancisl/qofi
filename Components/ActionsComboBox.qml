@@ -6,8 +6,11 @@ import QtQuick.Layouts
 
 Item {
     id: root
+
     required property var desktopEntry
     required property var maxUnclippedPopupEntries
+    required property var theme
+
     property bool isHovered: actionMouseArea.containsMouse
     property bool entryHasActions: desktopEntry.actions.length !== 0
 
@@ -37,13 +40,13 @@ Item {
             contentItem: Rectangle {
                 anchors.fill: parent
                 border.width: root.isHovered ? 2 : 0
-                border.color: "#41D8D5"
-                color: root.isHovered ? "#333333" : "#222222"
+                border.color: root.theme.accentColorDark
+                color: root.isHovered ? root.theme.entryBackgroundColor : root.theme.entryHoveredBackgroundColor
                 radius: 5
 
                 Text {
                     anchors.centerIn: parent
-                    color: "#AAAAAA"
+                    color: root.theme.entryTextColorDark
                     text: "Actions for " + root.desktopEntry.name
                 }
 
@@ -55,7 +58,7 @@ Item {
                     }
                     width: 30
                     height: parent.height
-                    color: "#41D8D5"
+                    color: root.theme.accentColorDark
                     radius: 12
                     Text {
                         anchors.centerIn: parent
@@ -80,8 +83,8 @@ Item {
                 contentItem: Rectangle {
                     property bool isHovered: popupMouseArea.containsMouse
                     border.width: isHovered ? 2 : 0
-                    border.color: "#41D8D5"
-                    color: isHovered ? "#555555" : "#3A3A3A"
+                    border.color: root.theme.accentColorDark
+                    color: isHovered ? root.theme.entryBackgroundColor : root.theme.entryHoveredBackgroundColor
                     anchors.fill: parent
                     radius: 5
 
@@ -94,14 +97,14 @@ Item {
                             Layout.alignment: Qt.AlignLeft
                             Layout.fillWidth: true
                             text: delegate.desktopActionEntry.name
-                            color: "#FFFFFF"
+                            color: root.theme.entryTextColorLight
                             font.pixelSize: 14
                         }
 
                         Text {
                             Layout.alignment: Qt.AlignRight
                             text: delegate.desktopActionEntry.execString
-                            color: "#AAAAAA"
+                            color: root.theme.entryTextColorAccent1
                             font.italic: true
                             font.pixelSize: 12
                         }
@@ -139,7 +142,7 @@ Item {
 
                 background: Rectangle {
                     width: parent.width
-                    color: "black"
+                    color: root.theme.backgroundColor
                 }
             }
 

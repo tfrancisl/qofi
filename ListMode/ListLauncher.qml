@@ -6,6 +6,8 @@ import "../Models"
 Item {
     id: root
 
+    required property var theme
+
     property real shellScale: 1.0
     property int listEntryHeight: 48
 
@@ -13,9 +15,9 @@ Item {
         id: searchBackground
         width: parent.width
         height: 35 * root.shellScale
-        color: "#242424"
+        color: root.theme.textEntryBackgroundColor
         border.width: 2
-        border.color: "#20AAD5"
+        border.color: root.theme.accentColorDark
         radius: 5
 
         anchors.top: parent.top
@@ -26,7 +28,7 @@ Item {
             anchors.margins: 10
 
             font.pixelSize: 16
-            color: "#ffffff"
+            color: root.theme.entryTextColorLight
             selectByMouse: true
 
             Keys.onEscapePressed: event => {
@@ -51,6 +53,7 @@ Item {
         clip: true
 
         delegate: ListEntry {
+            theme: root.theme
             width: appList.width
             shellScale: root.shellScale
             height: root.listEntryHeight * root.shellScale

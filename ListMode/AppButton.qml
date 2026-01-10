@@ -8,10 +8,12 @@ Rectangle {
     id: root
 
     required property var desktopEntry
+    required property var theme
+
     property bool isHovered: mouseArea.containsMouse
     border.width: isHovered ? 2 : 1
-    border.color: isHovered ? "#41D8D5" : "transparent"
-    color: isHovered ? "#333333" : "#222222"
+    border.color: isHovered ? root.theme.entryBorderColor : "transparent"
+    color: isHovered ? root.theme.entryBackgroundColor : root.theme.entryHoveredBackgroundColor
     radius: 5
 
     signal clicked
@@ -47,13 +49,13 @@ Rectangle {
 
             Text {
                 text: root.desktopEntry.name
-                color: "#ffffff"
+                color: root.theme.entryTextColorLight
                 font.pixelSize: 14
             }
 
             Text {
                 text: root.desktopEntry.execString
-                color: "#AAAAAA"
+                color: root.theme.entryTextColorDark
                 font.italic: true
                 font.pixelSize: 10
                 wrapMode: Text.WrapAnywhere

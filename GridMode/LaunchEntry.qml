@@ -8,8 +8,10 @@ import "../Components"
 
 Item {
     id: root
+
     required property var modelData
     required property var entry
+    required property var theme
 
     property bool entryExpanded: false
     property var preferredIconSize: (2 / 3) * width
@@ -26,8 +28,8 @@ Item {
             anchors.fill: parent
 
             border.width: mouseArea.containsMouse ? 2 : 0
-            border.color: "#41D8D5"
-            color: mouseArea.containsMouse ? "#333333" : "#222222"
+            border.color: root.theme.accentColorDark
+            color: mouseArea.containsMouse ? root.theme.entryBackgroundColor : root.theme.entryHoveredBackgroundColor
             radius: 5
 
             Image {
@@ -43,12 +45,11 @@ Item {
 
                 contentItem: Text {
                     text: root.entry.name
-                    color: "#888888"
+                    color: root.theme.entryTextColorAccent2
                 }
 
                 background: Rectangle {
-                    color: "#da111111"
-                    border.color: "#111111"
+                    color: root.theme.backgroundColorAccent1
                 }
             }
 
@@ -78,8 +79,8 @@ Item {
             anchors.fill: parent
 
             border.width: 4
-            border.color: "#41D8D5"
-            color: "#333333"
+            border.color: root.theme.entryBorderColor
+            color: root.theme.entryBackgroundColor
             radius: 5
 
             RowLayout {
@@ -99,7 +100,7 @@ Item {
                     Text {
                         Layout.alignment: Qt.AlignCenter
                         text: root.entry.name
-                        color: "#BBBBBB"
+                        color: root.theme.entryTextColorDark
                     }
                 }
 
@@ -111,13 +112,13 @@ Item {
                         RowLayout {
                             Text {
                                 text: "App Launch Command"
-                                color: "#BBBBBB"
+                                color: root.theme.entryTextColorDark
                             }
                             Text {
                                 wrapMode: Text.WrapAnywhere
                                 text: root.entry.execString
                                 font.italic: true
-                                color: "#888888"
+                                color: root.theme.entryTextColorAccent2
                             }
                         }
                     }
@@ -126,6 +127,7 @@ Item {
                         ActionsComboBox {
                             id: actions
 
+                            theme: root.theme
                             desktopEntry: root.entry
                             height: 25
                             maxUnclippedPopupEntries: 2
@@ -149,8 +151,8 @@ Item {
                             Layout.maximumHeight: expandedEntryBody.height * 0.3
 
                             border.width: 1
-                            border.color: "#41D8D5"
-                            color: "#333333"
+                            border.color: root.theme.accentColorDark
+                            color: root.theme.entryBackgroundColor
                             radius: 5
 
                             Loader {

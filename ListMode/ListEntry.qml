@@ -11,6 +11,7 @@ Item {
     required property var desktopEntry
     required property int index
     required property var modelData
+    required property var theme
 
     property int maxUnclippedPopupEntries: 4
     property real shellScale: 1.0
@@ -25,11 +26,12 @@ Item {
         AppButton {
             id: appButton
 
+            theme: root.theme
             desktopEntry: root.desktopEntry
 
             Layout.alignment: Qt.AlignLeft
             Layout.preferredWidth: actions.entryHasActions ? (parent.width * 0.6 - outerLayout.spacing) : parent.width
-            Layout.fillHeight: true
+            Layout.preferredHeight: root.height * root.shellScale
 
             onClicked: root.clicked()
         }
@@ -37,13 +39,13 @@ Item {
         ActionsComboBox {
             id: actions
 
+            theme: root.theme
             desktopEntry: root.desktopEntry
-            height: root.height * root.shellScale
             maxUnclippedPopupEntries: root.maxUnclippedPopupEntries
 
             Layout.alignment: Qt.AlignRight
             Layout.preferredWidth: entryHasActions ? parent.width * 0.4 : 0
-            Layout.fillHeight: true
+            Layout.preferredHeight: root.height * root.shellScale
 
             onClicked: root.clicked()
         }

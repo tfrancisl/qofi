@@ -6,6 +6,8 @@ import QtQuick
 import "GridMode/"
 import "ListMode/"
 
+import "Themes/"
+
 FloatingWindow {
     id: root
     color: "transparent"
@@ -16,6 +18,8 @@ FloatingWindow {
 
     property double shellScale: (2 / 3)
     property double shellAspectRatio: 16 / 9
+
+    property var theme: LightTheme
 
     implicitWidth: Math.round(screen.height * shellAspectRatio * shellScale)
     implicitHeight: Math.round(screen.height * shellScale)
@@ -39,19 +43,23 @@ FloatingWindow {
     Rectangle {
         anchors.fill: parent
 
-        color: "#CC000000"
+        color: root.theme.backgroundColor
         radius: 5
 
         focus: true
 
         Component {
             id: grid
-            GridLauncher {}
+            GridLauncher {
+                theme: root.theme
+            }
         }
 
         Component {
             id: list
-            ListLauncher {}
+            ListLauncher {
+                theme: root.theme
+            }
         }
 
         Loader {
@@ -74,7 +82,7 @@ FloatingWindow {
                 pixelSize: 10
                 italic: true
             }
-            color: "#1F1F1F"
+            color: root.theme.subtleTextColor
         }
     }
 }

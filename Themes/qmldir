@@ -1,0 +1,2 @@
+singleton DefaultTheme 1.0 DefaultTheme.qml
+singleton LightTheme 1.0 LightTheme.qml

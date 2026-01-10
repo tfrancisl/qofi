@@ -6,6 +6,9 @@ import "../Models"
 
 Item {
     id: root
+
+    required property var theme
+
     property double entryHeight: 100
     property double entryWidth: 100
     property double entryAspectRatio: (entryWidth / entryHeight)
@@ -28,6 +31,7 @@ Item {
 
             delegate: LaunchEntry {
                 entry: modelData
+                theme: root.theme
 
                 Layout.alignment: Qt.AlignTop
                 Layout.preferredHeight: entryExpanded ? root.expandedEntryHeight : root.entryHeight
