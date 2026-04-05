@@ -29,7 +29,7 @@ Item {
 
             border.width: mouseArea.containsMouse ? 2 : 0
             border.color: root.theme.accentColorDark
-            color: mouseArea.containsMouse ? root.theme.entryBackgroundColor : root.theme.entryHoveredBackgroundColor
+            color: mouseArea.containsMouse ? root.theme.entryHoveredBackgroundColor : root.theme.entryBackgroundColor
             radius: 5
 
             Image {
@@ -38,6 +38,10 @@ Item {
                 width: root.preferredIconSize
                 height: root.preferredIconSize
                 source: Quickshell.iconPath(root.entry.icon)
+                onStatusChanged: {
+                    if (status === Image.Error)
+                        source = Quickshell.iconPath("application-x-executable")
+                }
             }
 
             ToolTip {
@@ -95,6 +99,10 @@ Item {
                         Layout.preferredWidth: root.preferredIconSize / 4
                         Layout.preferredHeight: root.preferredIconSize / 4
                         source: Quickshell.iconPath(root.entry.icon)
+                        onStatusChanged: {
+                            if (status === Image.Error)
+                                source = Quickshell.iconPath("application-x-executable")
+                        }
                     }
 
                     Text {

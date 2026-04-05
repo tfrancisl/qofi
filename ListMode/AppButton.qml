@@ -13,7 +13,7 @@ Rectangle {
     property bool isHovered: mouseArea.containsMouse
     border.width: isHovered ? 2 : 1
     border.color: isHovered ? root.theme.entryBorderColor : "transparent"
-    color: isHovered ? root.theme.entryBackgroundColor : root.theme.entryHoveredBackgroundColor
+    color: isHovered ? root.theme.entryHoveredBackgroundColor : root.theme.entryBackgroundColor
     radius: 5
 
     signal clicked
@@ -39,6 +39,10 @@ Rectangle {
             Layout.preferredWidth: parent.height
             Layout.preferredHeight: parent.height
             source: Quickshell.iconPath(root.desktopEntry.icon)
+            onStatusChanged: {
+                if (status === Image.Error)
+                    source = Quickshell.iconPath("application-x-executable")
+            }
         }
 
         Column {
