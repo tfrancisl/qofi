@@ -7,8 +7,8 @@ Singleton {
     property color backgroundColor: "#EEEEEE"
     property color backgroundColorAccent1: "#FFFFFF"
 
-    property color entryBackgroundColor: "#C0C0C0"
-    property color entryHoveredBackgroundColor: "#DDDDDD"
+    property color entryBackgroundColor: "#DDDDDD"
+    property color entryHoveredBackgroundColor: "#C0C0C0"
     property color entryBorderColor: "#F2BEBA"
 
     property color textEntryBackgroundColor: "#C0C0C0"
